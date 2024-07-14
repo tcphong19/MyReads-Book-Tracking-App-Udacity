@@ -2,8 +2,7 @@ import React from "react";
 import Book from "./Book";
 import PropTypes from "prop-types";
 
-//function ShelfSection
-export default function ShelfSection(props) {
+export default function Shelf(props) {
   const { compartmentIndex, books, shelfChange } = props;
   return (
     <div>
@@ -19,7 +18,7 @@ export default function ShelfSection(props) {
 }
 
 // PropTypes are used to make sure the datatype receive is valid
-ShelfSection.propTypes = {
+Shelf.propTypes = {
   books: PropTypes.array.isRequired,
   shelfChange: PropTypes.func.isRequired,
 };

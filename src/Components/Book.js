@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 
 export default function Book(props) {
   const { book, shelfChange } = props;
+  const handleShelfChange = (event) => {
+    shelfChange(book, event.target.value);
+  };
   return (
     <li>
       <div className="book">
@@ -12,12 +15,14 @@ export default function Book(props) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${book.imageLinks.thumbnail})`,
+              backgroundImage: book.imageLinks.thumbnail
+                ? `url(${book.imageLinks.thumbnail})`
+                : `url('')`,
             }}
           ></div>
           <div className="book-shelf-changer">
             <select
-              onChange={(event) => shelfChange(book, event.target.value)}
+              onChange={handleShelfChange}
               value={book.shelf ? book.shelf : "none"}
             >
               <option value="moveTo" disabled>
@@ -31,17 +36,16 @@ export default function Book(props) {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        {book.authors.map((author, i) => (
-          <div className="book-authors" key={i}>
-            {author}
-          </div>
-        ))}
+        {book.authors &&
+          book.authors.map((author, i) => (
+            <div className="book-authors" key={i}>
+              {author}
+            </div>
+          ))}
       </div>
     </li>
   );
 }
-
-// PropTypes are used to make sure the datatype receive is valid
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   shelfChange: PropTypes.func.isRequired,

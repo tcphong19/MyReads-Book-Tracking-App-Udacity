@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import * as BooksAPI from "../BooksAPI";
-import ShelfSection from "./Shelf";
-import AddBook from "./AddBook";
+import Shelf from "./Shelf";
+import { Link } from "react-router-dom/cjs/react-router-dom";
 
-const Shelf = () => {
+export default function BookShelf() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -21,26 +21,27 @@ const Shelf = () => {
     });
   };
 
-  //Book shelf titles
+  //Self title
   const compartments = [
-    { type: "currentlyReading", title: "Currently Reading" },
-    { type: "wantToRead", title: "Want To Read" },
-    { type: "read", title: "Read" },
+    { title: "Currently Reading", value: "currentlyReading" },
+    { title: "Want To Read", value: "wantToRead" },
+    { title: "Read", value: "read" },
   ];
 
   return (
     <div>
+      {/* list books */}
       <div className="list-books-content">
         {books.length > 0 && (
           <div>
             {compartments.map((compartment, index) => {
               const compartmentBooks = books.filter(
-                (book) => book.shelf === compartment.type
+                (book) => book.shelf === compartment.value
               );
               return (
                 <div className="bookshelf" key={index}>
                   <h2 className="bookshelf-title">{compartment.title}</h2>
-                  <ShelfSection
+                  <Shelf
                     key={index}
                     books={compartmentBooks}
                     compartmentsList={compartments}
@@ -52,9 +53,17 @@ const Shelf = () => {
           </div>
         )}
       </div>
-      <AddBook currentBooks={books} />
+      {/* page search */}
+      <div className="open-search">
+        <Link
+          to={{
+            pathname: "/search",
+            state: {
+              booksFromHome: books,
+            },
+          }}
+        />
+      </div>
     </div>
   );
-};
-
-export default Shelf;
+}

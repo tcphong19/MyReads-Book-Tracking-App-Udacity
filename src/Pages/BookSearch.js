@@ -1,37 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Book from "../Components/Book";
 import { Link } from "react-router-dom";
-import Book from "../Component/Book";
 import * as BooksAPI from "../BooksAPI";
 
-const BookSearch = ({ location }) => {
+export default function BookSearch({ location }) {
   const [books, setBooks] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
-  const [searchError, setSearchError] = useState(false);
+  const [noBookFound, setNoBookFound] = useState(false);
 
   useEffect(() => {
     setBooks(location.state.booksFromHome);
   }, [location.state.booksFromHome]);
 
-  const searching = (event) => {
-    const searchInput = event.target.value;
-
-    if (searchInput) {
-      BooksAPI.search(searchInput).then((resultBooks) => {
-        if (!resultBooks || resultBooks.hasOwnProperty("error")) {
-          setSearchResult([]);
-          setSearchError(true);
-        } else {
-          setSearchResult(resultBooks);
-          setSearchError(false);
-          syncBookShelf();
-        }
-      });
-    } else {
-      setSearchResult([]);
-    }
-  };
-
-  const syncBookShelf = (books, searchResult) => {
+  const handleChooseBookShelf = (books, searchResult) => {
     if (books && searchResult) {
       books.forEach((book) => {
         searchResult.forEach((searchResultBook) => {
@@ -40,12 +21,30 @@ const BookSearch = ({ location }) => {
           }
         });
       });
-
       setSearchResult(searchResult);
     }
   };
 
-  const shelfChange = (book, shelf) => {
+  const handleSearchBooks = (e) => {
+    const searchInput = e.target.value;
+
+    if (searchInput) {
+      BooksAPI.search(searchInput).then((resultBooks) => {
+        if (!resultBooks || resultBooks.hasOwnProperty("error")) {
+          setSearchResult([]);
+          setNoBookFound(true);
+        } else {
+          setSearchResult(resultBooks);
+          setNoBookFound(false);
+          handleChooseBookShelf();
+        }
+      });
+    } else {
+      setSearchResult([]);
+    }
+  };
+
+  const handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then((result) => {
       book.shelf = shelf;
       var updatedBooks = books.filter(
@@ -65,7 +64,7 @@ const BookSearch = ({ location }) => {
         <div className="search-books-input-wrapper">
           <input
             type="text"
-            onChange={searching}
+            onChange={handleSearchBooks}
             placeholder="Search by title or author"
           />
         </div>
@@ -77,14 +76,17 @@ const BookSearch = ({ location }) => {
               <h3> {searchResult.length} books found!</h3>
             </div>
             <ol className="books-grid">
-              {searchResult &&
-                searchResult.map((book) => (
-                  <Book key={book.id} book={book} shelfChange={shelfChange} />
-                ))}
+              {searchResult.map((book) => (
+                <Book
+                  key={book.id}
+                  book={book}
+                  shelfChange={handleShelfChange}
+                />
+              ))}
             </ol>
           </div>
         )}
-        {searchError && (
+        {noBookFound && (
           <div>
             <h3>No book found. Please try again !</h3>
           </div>
@@ -92,6 +94,4 @@ const BookSearch = ({ location }) => {
       </div>
     </div>
   );
-};
-
-export default BookSearch;
+}

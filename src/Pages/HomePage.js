@@ -1,16 +1,15 @@
 import React from "react";
-import Shelf from "../Component/BookShelf";
+import BookShelf from "../Components/BookShelf";
 
-//function Home
-// Main page
-export default function Home() {
+//Home page
+export default function HomePage() {
   return (
     <div className="list-books">
       <div className="list-books-title">
         {/* Title of react app */}
         <h1>MyReads - A Book Tracking App</h1>
       </div>
-      <Shelf />
+      <BookShelf />
     </div>
   );
 }
