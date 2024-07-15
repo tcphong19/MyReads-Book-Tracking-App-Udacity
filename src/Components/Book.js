@@ -15,9 +15,10 @@ export default function Book(props) {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: book.imageLinks.thumbnail
-                ? `url(${book.imageLinks.thumbnail})`
-                : `url('')`,
+              backgroundImage:
+                book.imageLinks && book.imageLinks.thumbnail
+                  ? `url(${book.imageLinks.thumbnail})`
+                  : "none",
             }}
           ></div>
           <div className="book-shelf-changer">
