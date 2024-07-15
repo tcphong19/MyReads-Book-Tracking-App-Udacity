@@ -49,13 +49,12 @@ This is a react project and it is part of Udacity Frontend Nanodegree course. Th
 
 ## ➤ How to start
 
-Clone code from repo: [https://github.com/tcphong19/MyReads-Book-Tracking-App-Udacity.git]
-cd `MyReads-Book-Tracking-App-Udacity`
+Clone code from repo: https://github.com/tcphong19/MyReads-Book-Tracking-App-Udacity.git
+`cd MyReads-Book-Tracking-App-Udacity`
 
 - install dependencies with `npm install`
 - start with `npm start`
-  The project can be viewed in the browser at
-- [http://localhost:3000]
+  The project can be viewed in the browser at http://localhost:3000
 
 ## ➤ Search Terms for searching books in SearchPage
 
