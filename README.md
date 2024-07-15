@@ -39,23 +39,19 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-# ➤ MyReads - A Book Tracking App Project by Udacity
-
-In the MyReads project, you'll create a bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. The project emphasizes using React to build the application and provides an API server and client library that you will use to persist information as you interact with the application.
-
-## ➤ About MyReads Project
+## About MyReads-Book-Tracking-App-Udacity Project
 
 This is a react project and it is part of Udacity Frontend Nanodegree course. This is a single-page app that allows user to store your books and track what you're reading, want to read and books you have completed.
 
-## ➤ How to start
+## How to start
 
 Clone code from repo: https://github.com/tcphong19/MyReads-Book-Tracking-App-Udacity.git
-`cd MyReads-Book-Tracking-App-Udacity`
 
+- Go to project folder `cd MyReads-Book-Tracking-App-Udacity`
 - install dependencies with `npm install`
 - start with `npm start`
   The project can be viewed in the browser at http://localhost:3000
 
-## ➤ Search Terms for searching books in SearchPage
+## Search Terms for searching books in SearchPage
 
 'Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React', 'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS'
