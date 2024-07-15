@@ -28,20 +28,16 @@ export default function BookSearch({ location }) {
   const handleSearchBooks = (e) => {
     const searchInput = e.target.value;
 
-    if (searchInput) {
-      BooksAPI.search(searchInput).then((resultBooks) => {
-        if (!resultBooks || resultBooks.hasOwnProperty("error")) {
-          setSearchResult([]);
-          setNoBookFound(true);
-        } else {
-          setSearchResult(resultBooks);
-          setNoBookFound(false);
-          handleChooseBookShelf();
-        }
-      });
-    } else {
-      setSearchResult([]);
-    }
+    BooksAPI.search(searchInput).then((resultBooks) => {
+      if (!resultBooks || resultBooks.hasOwnProperty("error")) {
+        setSearchResult([]);
+        setNoBookFound(true);
+      } else {
+        setSearchResult(resultBooks);
+        setNoBookFound(false);
+        handleChooseBookShelf();
+      }
+    });
   };
 
   const handleShelfChange = (book, shelf) => {
