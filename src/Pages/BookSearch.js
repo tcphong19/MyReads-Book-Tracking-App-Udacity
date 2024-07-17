@@ -9,45 +9,51 @@ export default function BookSearch({ location }) {
   const [noBookFound, setNoBookFound] = useState(false);
 
   useEffect(() => {
-    setBooks(location.state.booksFromHome);
+    const booksFromHome = location.state.booksFromHome;
+    setBooks(booksFromHome);
   }, [location.state.booksFromHome]);
-
-  const handleChooseBookShelf = (books, searchResult) => {
-    if (books && searchResult) {
-      books.forEach((book) => {
-        searchResult.forEach((searchResultBook) => {
-          if (book.id === searchResultBook.id) {
-            searchResultBook.shelf = book.shelf;
-          }
-        });
-      });
-      setSearchResult(searchResult);
-    }
-  };
 
   const handleSearchBooks = (e) => {
     const searchInput = e.target.value;
-
-    BooksAPI.search(searchInput).then((resultBooks) => {
-      if (!resultBooks || resultBooks.hasOwnProperty("error")) {
-        setSearchResult([]);
-        setNoBookFound(true);
-      } else {
-        setSearchResult(resultBooks);
-        setNoBookFound(false);
-        handleChooseBookShelf();
-      }
-    });
+    if (searchInput) {
+      BooksAPI.search(searchInput).then((resultBooks) => {
+        if (!resultBooks || resultBooks.hasOwnProperty("error")) {
+          setSearchResult([]);
+          setNoBookFound(true);
+        } else {
+          const updatedBooks = resultBooks.map((searchBook) => {
+            const bookFound = books.find((book) => book.id === searchBook.id);
+            if (bookFound) {
+              searchBook.shelf = bookFound.shelf;
+            } else {
+              searchBook.shelf = "none";
+            }
+            return searchBook;
+          });
+          setSearchResult(updatedBooks);
+          setNoBookFound(false);
+        }
+      });
+    } else {
+      setSearchResult([]);
+    }
   };
 
   const handleShelfChange = (book, shelf) => {
     BooksAPI.update(book, shelf).then((result) => {
       book.shelf = shelf;
-      var updatedBooks = books.filter(
+      const updatedBooks = books.filter(
         (resultBook) => resultBook.id !== book.id
       );
       updatedBooks.push(book);
       setBooks(updatedBooks);
+      const updatedSearchResult = searchResult.map((searchBook) => {
+        if (searchBook.id === book.id) {
+          searchBook.shelf = shelf;
+        }
+        return searchBook;
+      });
+      setSearchResult(updatedSearchResult);
     });
   };
 
@@ -69,7 +75,7 @@ export default function BookSearch({ location }) {
         {searchResult.length > 0 && (
           <div>
             <div>
-              <h3> {searchResult.length} books found!</h3>
+              <h3>{searchResult.length} books found!</h3>
             </div>
             <ol className="books-grid">
               {searchResult.map((book) => (
@@ -84,7 +90,7 @@ export default function BookSearch({ location }) {
         )}
         {noBookFound && (
           <div>
-            <h3>No book found. Please try again !</h3>
+            <h3>No book found. Please try again!</h3>
           </div>
         )}
       </div>
